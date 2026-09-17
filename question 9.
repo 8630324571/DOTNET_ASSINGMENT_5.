@@ -1,0 +1,34 @@
+using System;
+using System.IO;
+
+class Program {
+    static void Main() {
+        string filePath = "student_details.txt";
+
+        try {
+            // Writing student details into the file
+            using (StreamWriter writer = new StreamWriter(filePath)) {
+                writer.WriteLine("Roll No: 101");
+                writer.WriteLine("Name: Rahul Sharma");
+                writer.WriteLine("Course: Master of Computer Applications");
+                writer.WriteLine("University: GLA University, Mathura");
+            }
+            Console.WriteLine("Student details successfully written to 'student_details.txt'.\n");
+
+            // Reading and displaying the file contents
+            Console.WriteLine("--- Reading Contents from File ---");
+            using (StreamReader reader = new StreamReader(filePath)) {
+                string line;
+                while ((line = reader.ReadLine()) != null) {
+                    Console.WriteLine(line);
+                }
+            }
+        }
+        catch (IOException ex) {
+            Console.WriteLine($"An I/O error occurred: {ex.Message}");
+        }
+        catch (Exception ex) {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+        }
+    }
+}
