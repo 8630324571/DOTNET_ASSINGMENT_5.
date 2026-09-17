@@ -1,0 +1,14 @@
+using System;
+
+class Program {
+    static void Main() {
+        try {
+            Console.Write("Enter an integer value: ");
+            int num = int.Parse(Console.ReadLine());
+            Console.WriteLine($"Successfully entered integer: {num}");
+        }
+        catch (FormatException) {
+            Console.WriteLine("FormatException caught: You entered a non-numeric value. Please enter a valid integer.");
+        }
+    }
+}
