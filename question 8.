@@ -1,0 +1,51 @@
+using System;
+
+// Custom Exception Definition
+public class InsufficientBalanceException : Exception {
+    public InsufficientBalanceException(string message) : base(message) {
+    }
+}
+
+class BankAccount {
+    private double balance;
+
+    public BankAccount(double initialBalance) {
+        balance = initialBalance;
+    }
+
+    public void Withdraw(double amount) {
+        try {
+            Console.WriteLine($"Attempting to withdraw ₹{amount}...");
+            if (amount > balance) {
+                throw new InsufficientBalanceException($"Withdrawal failed! Available balance is ₹{balance}, but requested ₹{amount}.");
+            }
+            if (amount <= 0) {
+                throw new ArgumentException("Amount must be greater than zero.");
+            }
+
+            balance -= amount;
+            Console.WriteLine($"Withdrawal successful! Remaining balance: ₹{balance}");
+        }
+        catch (InsufficientBalanceException) {
+            Console.WriteLine("Exception caught inside Withdraw() method. Rethrowing...");
+            throw; // Demonstrating 'throw' keyword
+        }
+        finally {
+            Console.WriteLine("--- Withdraw method execution completed ---\n");
+        }
+    }
+}
+
+class Program {
+    static void Main() {
+        BankAccount account = new BankAccount(8000.00);
+
+        try {
+            account.Withdraw(3000.00); // Valid withdrawal
+            account.Withdraw(10000.00); // Will trigger exception
+        }
+        catch (InsufficientBalanceException ex) {
+            Console.WriteLine($"Main Catch Block Handled: {ex.Message}");
+        }
+    }
+}
