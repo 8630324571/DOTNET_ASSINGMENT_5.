@@ -1,0 +1,25 @@
+using System;
+
+class Program {
+    static void Main() {
+        try {
+            Console.Write("Enter first number (numerator): ");
+            int num1 = int.Parse(Console.ReadLine());
+            
+            Console.Write("Enter second number (denominator): ");
+            int num2 = int.Parse(Console.ReadLine());
+            
+            int result = num1 / num2;
+            Console.WriteLine($"Result: {result}");
+        }
+        catch (FormatException) {
+            Console.WriteLine("Catch Block 1: FormatException caught! Non-numeric value entered.");
+        }
+        catch (DivideByZeroException) {
+            Console.WriteLine("Catch Block 2: DivideByZeroException caught! Cannot divide by zero.");
+        }
+        catch (Exception ex) {
+            Console.WriteLine($"Catch Block 3: General Exception caught: {ex.Message}");
+        }
+    }
+}
