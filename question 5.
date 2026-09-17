@@ -1,0 +1,35 @@
+using System;
+
+class Program {
+    static void Main() {
+        double balance = 5000.00;
+        
+        try {
+            Console.WriteLine($"Current Account Balance: ₹{balance}");
+            Console.Write("Enter amount to withdraw: ");
+            double withdrawalAmount = Convert.ToDouble(Console.ReadLine());
+
+            if (withdrawalAmount > balance) {
+                throw new InvalidOperationException("Insufficient balance in your account.");
+            }
+            if (withdrawalAmount <= 0) {
+                throw new ArgumentException("Withdrawal amount must be greater than zero.");
+            }
+
+            balance -= withdrawalAmount;
+            Console.WriteLine($"Please collect your cash. Remaining Balance: ₹{balance}");
+        }
+        catch (InvalidOperationException ex) {
+            Console.WriteLine($"Transaction Failed: {ex.Message}");
+        }
+        catch (ArgumentException ex) {
+            Console.WriteLine($"Invalid Input: {ex.Message}");
+        }
+        catch (FormatException) {
+            Console.WriteLine("Error: Please enter a valid numeric amount.");
+        }
+        finally {
+            Console.WriteLine("--- Transaction Complete. Thank you for using our ATM ---");
+        }
+    }
+}
