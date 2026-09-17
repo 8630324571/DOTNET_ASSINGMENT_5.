@@ -1,0 +1,51 @@
+using System;
+using System.IO;
+
+class Program {
+    static void Main() {
+        string filePath = "student_marks.txt";
+
+        try {
+            // Creating a sample file if it doesn't already exist for testing purposes
+            if (!File.Exists(filePath)) {
+                File.WriteAllLines(filePath, new string[] { "75", "82", "90", "64", "88" });
+                Console.WriteLine("Sample 'student_marks.txt' file created with sample marks.\n");
+            }
+
+            string[] lines = File.ReadAllLines(filePath);
+            int total = 0;
+            int highest = int.MinValue;
+            int lowest = int.MaxValue;
+            int count = 0;
+
+            foreach (string line in lines) {
+                if (int.TryParse(line.Trim(), out int mark)) {
+                    total += mark;
+                    count++;
+                    if (mark > highest) highest = mark;
+                    if (mark < lowest) lowest = mark;
+                }
+            }
+
+            if (count > 0) {
+                double average = (double)total / count;
+                Console.WriteLine("--- Student Marks Statistics ---");
+                Console.WriteLine($"Total Marks: {total}");
+                Console.WriteLine($"Average Marks: {average:F2}");
+                Console.WriteLine($"Highest Mark: {highest}");
+                Console.WriteLine($"Lowest Mark: {lowest}");
+            } else {
+                Console.WriteLine("No valid marks found in the file.");
+            }
+        }
+        catch (FileNotFoundException) {
+            Console.WriteLine($"Error: The file '{filePath}' could not be found.");
+        }
+        catch (IOException ex) {
+            Console.WriteLine($"File I/O Error: {ex.Message}");
+        }
+        catch (Exception ex) {
+            Console.WriteLine($"An unexpected error occurred: {ex.Message}");
+        }
+    }
+}
